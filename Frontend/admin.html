@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURELIA | Geneva Concierge Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-wrapper { max-width: 1300px; margin: 130px auto 80px; padding: 0 40px; }
+        .admin-login-box { max-width: 440px; margin: 160px auto; background: #111; border: 1px solid var(--gold); padding: 45px; text-align: center; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-bottom: 45px; }
+        .kpi-card { background: var(--bg-secondary); border: 1px solid rgba(212, 175, 55, 0.25); padding: 28px; }
+        .kpi-card span { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 10px; }
+        .kpi-card h3 { font-size: 32px; color: var(--gold); }
+        .admin-section { background: var(--bg-secondary); border: 1px solid rgba(212, 175, 55, 0.15); padding: 30px; margin-bottom: 40px; overflow-x: auto; }
+        .admin-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        table.admin-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+        table.admin-table th { color: var(--gold); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 12px; border-bottom: 1px solid rgba(212, 175, 55, 0.25); }
+        table.admin-table td { padding: 16px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); vertical-align: top; color: var(--text-main); }
+        .status-select { background: #181818; color: var(--gold-light); border: 1px solid rgba(212, 175, 55, 0.4); padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-size: 12px; outline: none; }
+        .mint-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+    </style>
+</head>
+<body>
+
+    <header class="scrolled">
+        <a href="index.html" class="logo">AURELIA<span>.</span></a>
+        <div class="nav-icons">
+            <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">&larr; Return to Boutique</a>
+            <button id="admin-logout-btn" onclick="logoutAdmin()" class="btn btn-outline" style="padding: 8px 18px; font-size: 11px; display: none;">Lock Portal</button>
+        </div>
+    </header>
+
+    <!-- Gatekeeper Login Screen -->
+    <div id="admin-login-screen" class="admin-login-box">
+        <p class="section-subtitle" style="margin-bottom: 10px;">Geneva Atelier Internal</p>
+        <h2 style="font-size: 28px; margin-bottom: 14px;">Concierge Operations</h2>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 25px; line-height: 1.6;">Enter your master salon passcode to inspect Private Vault allocations and boutique appointments.</p>
+        <form onsubmit="loginAdmin(event)">
+            <div class="luxury-form-group">
+                <input type="password" id="admin-passcode" placeholder="Enter Concierge Passcode" required>
+            </div>
+            <button type="submit" class="btn btn-gold" style="width: 100%;">Unlock Portal</button>
+        </form>
+    </div>
+
+    <!-- Protected Dashboard Content -->
+    <main id="admin-dashboard" class="admin-wrapper" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 35px; flex-wrap: wrap; gap: 15px;">
+            <div>
+                <p class="section-subtitle" style="margin-bottom: 6px;">Live MongoDB Ledger</p>
+                <h1 style="font-size: 38px;">Geneva Concierge Command</h1>
+            </div>
+            <button onclick="loadDashboardData()" class="btn btn-outline" style="padding: 12px 24px;"><i class="fa-solid fa-rotate"></i> Refresh Records</button>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <span>Private Vault Revenue</span>
+                <h3 id="kpi-revenue">$0</h3>
+            </div>
+            <div class="kpi-card">
+                <span>Active Allocations</span>
+                <h3 id="kpi-orders">0</h3>
+            </div>
+            <div class="kpi-card">
+                <span>Salon Appointments</span>
+                <h3 id="kpi-appointments">0</h3>
+            </div>
+            <div class="kpi-card">
+                <span>Minted Certificates</span>
+                <h3 id="kpi-warranties">0</h3>
+            </div>
+        </div>
+
+        <!-- Private Vault Orders Table -->
+        <section class="admin-section">
+            <div class="admin-section-header">
+                <h2 style="font-size: 24px;">Private Vault Allocations (Orders)</h2>
+            </div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Client Email</th>
+                        <th>Bespoke Timepieces</th>
+                        <th>Total Value</th>
+                        <th>Concierge Status</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-table-body"></tbody>
+            </table>
+        </section>
+
+        <!-- Boutique Appointments Table -->
+        <section class="admin-section">
+            <div class="admin-section-header">
+                <h2 style="font-size: 24px;">Private Salon Viewings</h2>
+            </div>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Flagship Boutique</th>
+                        <th>Requested Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="appointments-table-body"></tbody>
+            </table>
+        </section>
+
+        <!-- Mint New Blockchain Certificate -->
+        <section class="admin-section">
+            <div class="admin-section-header">
+                <h2 style="font-size: 24px;">Register New Blockchain Warranty Certificate</h2>
+                    <!-- Log Atelier Service Entry on Existing Warranty -->
+                <section class="admin-section">
+                    <div class="admin-section-header">
+                        <h2 style="font-size: 24px;">Append Atelier Service Record</h2>
+                    </div>
+                    <form onsubmit="appendServiceRecord(event)">
+                        <div class="mint-grid">
+                            <div class="luxury-form-group">
+                                <label>Serial Number</label>
+                                <input type="text" id="service-serial" placeholder="e.g. AUR-8821-01" required>
+                            </div>
+                            <div class="luxury-form-group">
+                                <label>Service Date</label>
+                                <input type="text" id="service-date" placeholder="e.g. Nov 19, 2026" required>
+                            </div>
+                            <div class="luxury-form-group" style="grid-column: span 2;">
+                                <label>Atelier Service Note</label>
+                                <input type="text" id="service-note" placeholder="e.g. Ultrasonic Case Cleaning & Timing Regulation" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline">Add to Service Log</button>
+                    </form>
+                </section>
+            </div>
+            <form onsubmit="mintCertificate(event)">
+                <div class="mint-grid">
+                    <div class="luxury-form-group">
+                        <label>Serial Number</label>
+                        <input type="text" id="cert-serial" placeholder="e.g. AUR-8821-02" required>
+                    </div>
+                    <div class="luxury-form-group">
+                        <label>Timepiece Model</label>
+                        <input type="text" id="cert-model" placeholder="e.g. Aurelia Royal Grand" required>
+                    </div>
+                    <div class="luxury-form-group">
+                        <label>Reference Code</label>
+                        <input type="text" id="cert-ref" placeholder="e.g. Ref. AR-8821-PT" required>
+                    </div>
+                    <div class="luxury-form-group">
+                        <label>Caliber & Edition</label>
+                        <input type="text" id="cert-caliber" placeholder="e.g. Caliber AUR-01 (015/100)" required>
+                    </div>
+                    <div class="luxury-form-group">
+                        <label>Case Material</label>
+                        <input type="text" id="cert-material" placeholder="e.g. 950 Platinum" required>
+                    </div>
+                    <div class="luxury-form-group">
+                        <label>Originating Salon</label>
+                        <select id="cert-salon">
+                            <option>Geneva Flagship Salon</option>
+                            <option>Paris • Place Vendôme</option>
+                            <option>New York • Fifth Avenue</option>
+                            <option>Tokyo • Ginza</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-gold">Mint Certificate to Registry</button>
+            </form>
+        </section>
+    </main>
+    <script>
+        window.AURELIA_API_BASE = 'https://aurelia-horlogerie-backend.onrender.com/api';
+    </script>
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

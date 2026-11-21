@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURELIA | Luxury Timepieces</title>
+    <!-- Google Fonts for Luxury Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header id="navbar">
+        <a href="#" class="logo">AURELIA<span>.</span></a>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#collection">Collection</a></li>
+                <li><a href="#heritage">Heritage</a></li>
+                <li><a href="#boutiques">Boutiques</a></li>
+            </ul>
+        </nav>
+        
+        <div class="nav-icons">
+            <i class="fa-solid fa-search" onclick="toggleSearchModal()" title="Search Collection"></i>
+            <div class="cart-badge-wrapper" onclick="toggleCart()">
+                <i class="fa-solid fa-bag-shopping" title="Private Vault"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+            <i class="fa-solid fa-user" onclick="toggleAccountModal()" title="Client Portal"></i>
+            <!-- Mobile Hamburger Button -->
+            <i class="fa-solid fa-bars mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()" title="Menu"></i>
+        </div>
+    </header>
+
+    <!-- Mobile Full-Screen Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobile-nav">
+        <button type="button" class="mobile-nav-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="#" class="logo" style="margin-bottom: 40px;" onclick="toggleMobileMenu()">AURELIA<span>.</span></a>
+        <ul class="mobile-nav-links">
+            <li><a href="#home" onclick="toggleMobileMenu()">Home</a></li>
+            <li><a href="#collection" onclick="toggleMobileMenu()">Collection</a></li>
+            <li><a href="#heritage" onclick="toggleMobileMenu()">Heritage</a></li>
+            <li><a href="#boutiques" onclick="toggleMobileMenu()">Boutiques</a></li>
+            <li><a href="javascript:void(0)" onclick="toggleMobileMenu(); openViewingModal();">Book Private Viewing</a></li>
+        </ul>
+        <div class="mobile-nav-footer">
+            <p>GENEVA &bull; PARIS &bull; NEW YORK &bull; TOKYO</p>
+        </div>
+    </div>
+
+    <!-- Hero Section with Background Analog Watch Face -->
+    <section class="hero" id="home">
+        <div class="analog-watch-bg" aria-hidden="true">
+            <div class="watch-dial">
+                <div class="dial-brand">AURELIA</div>
+                <div class="dial-sub">AUTOMATIC</div>
+
+                <div class="marker marker-12"></div>
+                <div class="marker marker-3"></div>
+                <div class="marker marker-6"></div>
+                <div class="marker marker-9"></div>
+
+                <div class="date-window" id="dial-date">17</div>
+                <div class="hand hour-hand" id="hour-hand"></div>
+                <div class="hand minute-hand" id="minute-hand"></div>
+                <div class="hand second-hand" id="second-hand"></div>
+                <div class="center-pin"></div>
+            </div>
+        </div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <div class="hero-utilities">
+                <div class="live-clock-badge">
+                    <i class="fa-solid fa-clock"></i>
+                    <span id="real-time-display">Loading Live Time...</span>
+                </div>
+            </div>
+
+            <p class="hero-subtitle">Swiss Masterpiece Chronographs</p>
+            <h1 class="hero-title">Timeless Elegance, Uncompromised Precision</h1>
+            <p class="hero-description">Discover horological masterpieces crafted for those who define time on their own terms. Hand-assembled with 18k yellow gold and sapphire crystal.</p>
+
+            <div class="hero-btns">
+                <a href="#collection" class="btn btn-gold">Explore Collection</a>
+                <button type="button" onclick="openViewingModal()" class="btn btn-outline">Book Private Viewing</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Collection -->
+    <section class="collection-section" id="collection">
+        <div class="section-header">
+            <p class="section-subtitle">Exquisite Craftsmanship</p>
+            <h2 class="section-title">The Masterpiece Series</h2>
+
+            <!-- Interactive Category Filter Bar -->
+            <div class="filter-bar" id="collection-filters">
+                <button type="button" class="filter-btn active" data-filter="all">All Timepieces</button>
+                <button type="button" class="filter-btn" data-filter="Limited Edition">Limited Edition</button>
+                <button type="button" class="filter-btn" data-filter="Tourbillon">Tourbillon</button>
+                <button type="button" class="filter-btn" data-filter="Automatic">Automatic</button>
+            </div>
+        </div>
+
+        <div class="watch-grid" id="watch-grid-container">
+            <!-- Watch 1 -->
+            <div class="watch-card" data-category="Limited Edition">
+                <div class="watch-img-container">
+                    <span class="badge-tag">Limited Edition</span>
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Aurelia Royal Gold">
+                </div>
+                <div class="watch-info">
+                    <h3 class="watch-name">Aurelia Royal Grand</h3>
+                    <p class="watch-ref">Ref. AR-8821-YG</p>
+                    <div class="watch-footer">
+                        <span class="watch-price">$38,500</span>
+                        <a href="javascript:void(0)" onclick="openWatchModal(0)" class="details-link">Discover <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Watch 2 -->
+            <div class="watch-card" data-category="Tourbillon">
+                <div class="watch-img-container">
+                    <span class="badge-tag">Tourbillon</span>
+                    <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=800&q=80" alt="Chronos Noir Skeleton">
+                </div>
+                <div class="watch-info">
+                    <h3 class="watch-name">Chronos Noir Skeleton</h3>
+                    <p class="watch-ref">Ref. CN-904-BK</p>
+                    <div class="watch-footer">
+                        <span class="watch-price">$54,200</span>
+                        <a href="javascript:void(0)" onclick="openWatchModal(1)" class="details-link">Discover <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Watch 3 -->
+            <div class="watch-card" data-category="Automatic">
+                <div class="watch-img-container">
+                    <span class="badge-tag">Automatic</span>
+                    <img src="https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=800&q=80" alt="Imperial Heritage">
+                </div>
+                <div class="watch-info">
+                    <h3 class="watch-name">Imperial Heritage</h3>
+                    <p class="watch-ref">Ref. IH-410-RG</p>
+                    <div class="watch-footer">
+                        <span class="watch-price">$29,900</span>
+                        <a href="javascript:void(0)" onclick="openWatchModal(2)" class="details-link">Discover <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Heritage & Craftsmanship Section -->
+    <section class="heritage-section" id="heritage">
+        <div class="heritage-container">
+            <div class="heritage-image">
+                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?auto=format&fit=crop&w=900&q=80" alt="Swiss Watchmaking Movement">
+            </div>
+            <div class="heritage-text">
+                <p class="section-subtitle">Since 1894 &bull; Geneva</p>
+                <h2>The Art of Haute Horlogerie</h2>
+                <p>Every Aurelia timepiece requires over 600 hours of meticulous hand-finishing by master watchmakers in our Geneva atelier. From hand-beveled bridges to solid 18k gold oscillating weights, no detail is left to automation.</p>
+                <p>Each movement undergoes 30 days of chronometric testing across five positions before receiving the Aurelia Seal of Excellence.</p>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <h3>600+</h3>
+                        <span>Hours Per Watch</span>
+                    </div>
+                    <div class="stat-item">
+                        <h3>72h</h3>
+                        <span>Power Reserve</span>
+                    </div>
+                    <div class="stat-item">
+                        <h3>18k</h3>
+                        <span>Solid Gold Cases</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Boutiques Section -->
+    <section class="boutiques-section" id="boutiques">
+        <div class="section-header">
+            <p class="section-subtitle">Global Salons</p>
+            <h2 class="section-title">Private Flagship Boutiques</h2>
+        </div>
+
+        <div class="boutiques-grid">
+            <div class="boutique-card">
+                <span class="boutique-tag">Headquarters</span>
+                <h3>Geneva</h3>
+                <p>Rue du Rhône 42, 1204 Genève, Switzerland</p>
+                <p class="boutique-hours">Mon – Sat: 10:00 AM – 7:00 PM</p>
+                <button type="button" class="details-link" style="background:none; border:none; cursor:pointer;" onclick="openViewingWithCity('Geneva Flagship Salon')">Schedule Visit <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+            <div class="boutique-card">
+                <span class="boutique-tag">Haute Horlogerie</span>
+                <h3>Paris</h3>
+                <p>18 Place Vendôme, 75001 Paris, France</p>
+                <p class="boutique-hours">Mon – Sat: 10:30 AM – 7:30 PM</p>
+                <button type="button" class="details-link" style="background:none; border:none; cursor:pointer;" onclick="openViewingWithCity('Paris • Place Vendôme')">Schedule Visit <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+            <div class="boutique-card">
+                <span class="boutique-tag">North America</span>
+                <h3>New York</h3>
+                <p>711 Fifth Avenue, New York, NY 10022</p>
+                <p class="boutique-hours">Mon – Sat: 10:00 AM – 6:30 PM</p>
+                <button type="button" class="details-link" style="background:none; border:none; cursor:pointer;" onclick="openViewingWithCity('New York • Fifth Avenue')">Schedule Visit <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+            <div class="boutique-card">
+                <span class="boutique-tag">Asia Pacific</span>
+                <h3>Tokyo</h3>
+                <p>6-10-1 Ginza, Chuo-ku, Tokyo 104-0061</p>
+                <p class="boutique-hours">Daily: 11:00 AM – 8:00 PM</p>
+                <button type="button" class="details-link" style="background:none; border:none; cursor:pointer;" onclick="openViewingWithCity('Tokyo • Ginza')">Schedule Visit <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Watch Specifications & Bespoke Customizer Modal -->
+    <div class="modal-backdrop" id="watch-modal">
+        <div class="luxury-modal">
+            <button type="button" class="modal-close" onclick="closeWatchModal()" aria-label="Close">&times;</button>
+            <div class="spec-modal-grid">
+                <!-- Live Interactive Preview Column -->
+                <div class="customizer-preview-box">
+                    <span class="customizer-badge" id="customizer-strap-tag">Alligator Leather Strap</span>
+                    <div class="watch-preview-stage" id="watch-preview-stage">
+                        <img id="modal-watch-img" src="" alt="Watch Detail">
+                    </div>
+                    <p class="customizer-caption" id="customizer-summary">18k Yellow Gold &bull; Obsidian Dial &bull; Alligator Strap</p>
+                </div>
+
+                <!-- Specs & Customization Controls Column -->
+                <div>
+                    <p class="section-subtitle" id="modal-watch-ref" style="margin-bottom: 8px;">REF</p>
+                    <h2 id="modal-watch-name" style="font-size: 30px; margin-bottom: 6px;">Watch Name</h2>
+                    <p id="modal-watch-price" style="color: var(--gold); font-size: 22px; font-weight: 600;">$0</p>
+
+                    <!-- Bespoke Customizer Controls -->
+                    <div class="customizer-controls">
+                        <div class="customizer-group">
+                            <span class="customizer-label">Case Metal: <strong id="selected-metal-name">18k Yellow Gold</strong></span>
+                            <div class="swatch-row" id="metal-swatches">
+                                <button type="button" class="swatch-btn active" data-metal="18k Yellow Gold" data-code="YG" data-price="0" data-filter="sepia(0.25) saturate(1.2)" style="background: linear-gradient(135deg, #f3e5ab, #aa8c2c);" title="18k Yellow Gold"></button>
+                                <button type="button" class="swatch-btn" data-metal="18k Rose Gold" data-code="RG" data-price="1500" data-filter="sepia(0.45) hue-rotate(-25deg) saturate(1.3)" style="background: linear-gradient(135deg, #f4c2b8, #b76e60);" title="18k Rose Gold (+$1,500)"></button>
+                                <button type="button" class="swatch-btn" data-metal="950 Platinum" data-code="PT" data-price="4500" data-filter="grayscale(0.85) brightness(1.15) contrast(1.1)" style="background: linear-gradient(135deg, #ffffff, #8c929ac0);" title="950 Platinum (+$4,500)"></button>
+                            </div>
+                        </div>
+
+                        <div class="customizer-group">
+                            <span class="customizer-label">Dial Finish: <strong id="selected-dial-name">Obsidian Sunburst</strong></span>
+                            <div class="swatch-row" id="dial-swatches">
+                                <button type="button" class="swatch-btn active" data-dial="Obsidian Sunburst" data-price="0" data-bg="radial-gradient(circle, #242424 0%, #090909 100%)" style="background: #111111;" title="Obsidian Sunburst"></button>
+                                <button type="button" class="swatch-btn" data-dial="Midnight Geneva Blue" data-price="800" data-bg="radial-gradient(circle, #183254 0%, #07111f 100%)" style="background: #13294b;" title="Midnight Geneva Blue (+$800)"></button>
+                                <button type="button" class="swatch-btn" data-dial="Imperial Emerald" data-price="1200" data-bg="radial-gradient(circle, #144032 0%, #061712 100%)" style="background: #0f3d2e;" title="Imperial Emerald (+$1,200)"></button>
+                            </div>
+                        </div>
+
+                        <div class="customizer-group">
+                            <span class="customizer-label">Strap Material</span>
+                            <div class="strap-pills" id="strap-options">
+                                <button type="button" class="strap-pill active" data-strap="Hand-Stitched Alligator" data-price="0">Alligator Leather</button>
+                                <button type="button" class="strap-pill" data-strap="Matching Precious Bracelet" data-price="3200">Precious Metal (+$3,200)</button>
+                                <button type="button" class="strap-pill" data-strap="Vulcanized FKM Rubber" data-price="-400">Sport FKM (-$400)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="spec-list" id="modal-watch-specs"></ul>
+                    <button type="button" class="btn btn-gold" style="width: 100%;" id="modal-add-btn">Acquire Bespoke Timepiece</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Private Viewing Appointment Modal -->
+    <div class="modal-backdrop" id="viewing-modal">
+        <div class="luxury-modal" style="max-width: 520px;">
+            <button type="button" class="modal-close" onclick="closeViewingModal()" aria-label="Close">&times;</button>
+            <p class="section-subtitle" style="margin-bottom: 10px;">VIP Concierge</p>
+            <h2 style="font-size: 32px; margin-bottom: 25px;">Book Private Viewing</h2>
+            <form onsubmit="submitViewingForm(event)">
+                <div class="luxury-form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="viewing-name" required placeholder="e.g. Alexander Sterling">
+                </div>
+                <div class="luxury-form-group">
+                    <label>Preferred Boutique</label>
+                    <select id="viewing-boutique">
+                        <option>Geneva Flagship Salon</option>
+                        <option>Paris &bull; Place Vendôme</option>
+                        <option>New York &bull; Fifth Avenue</option>
+                        <option>Tokyo &bull; Ginza</option>
+                    </select>
+                </div>
+                <div class="luxury-form-group">
+                    <label>Preferred Date</label>
+                    <input type="date" id="viewing-date" required>
+                </div>
+                <button type="submit" class="btn btn-gold" style="width: 100%;">Confirm Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Live Collection Search Modal -->
+    <div class="modal-backdrop" id="search-modal">
+        <div class="luxury-modal" style="max-width: 680px;">
+            <button type="button" class="modal-close" onclick="toggleSearchModal()" aria-label="Close">&times;</button>
+            <p class="section-subtitle" style="margin-bottom: 10px;">Catalog Archive</p>
+            <h2 style="font-size: 28px; margin-bottom: 20px;">Search Timepieces</h2>
+            <div class="luxury-form-group">
+                <input type="text" id="search-input" onkeyup="filterWatches()" placeholder="Search by model, reference, or material (e.g. Tourbillon, Rose Gold)...">
+            </div>
+            <div id="search-results" class="search-results-list"></div>
+        </div>
+    </div>
+
+    <!-- Private Client Account Modal -->
+    <div class="modal-backdrop" id="account-modal">
+        <div class="luxury-modal" style="max-width: 460px;">
+            <button type="button" class="modal-close" onclick="toggleAccountModal()" aria-label="Close">&times;</button>
+            <p class="section-subtitle" style="margin-bottom: 10px;">Aurelia Privé</p>
+            <h2 style="font-size: 30px; margin-bottom: 10px;">Client Portal</h2>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 25px; line-height: 1.6;">Access your digital certificates of authenticity, warranty records, and private allocations.</p>
+            <form onsubmit="handleClientLogin(event)">
+                <div class="luxury-form-group">
+                    <label>Client Email</label>
+                    <input type="email" required placeholder="client@domain.com">
+                </div>
+                <div class="luxury-form-group">
+                    <label>Passcode or Serial Number</label>
+                    <input type="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-gold" style="width: 100%;">Enter Salon</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Slide-Out Private Vault (Cart) -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3 style="letter-spacing: 2px; font-size: 20px;">PRIVATE VAULT</h3>
+            <button type="button" class="modal-close" style="position: static;" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <p style="color: var(--text-muted); text-align: center; margin-top: 40px;">Your vault is currently empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="luxury-form-group" style="margin-bottom: 14px;">
+                <input type="email" id="vault-client-email" placeholder="Enter Client Email for Allocation" required>
+            </div>
+            <div class="cart-total">
+                <span>Estimated Total</span>
+                <span style="color: var(--gold); font-weight: 600;" id="cart-total-price">$0</span>
+            </div>
+            <button type="button" class="btn btn-gold" style="width: 100%;" onclick="checkoutVault()">Request Concierge Checkout</button>
+        </div>
+    </div>
+
+    <!-- Warranty & Blockchain Provenance Verification Modal -->
+    <div class="modal-backdrop" id="warranty-modal">
+        <div class="luxury-modal" style="max-width: 680px;">
+            <button type="button" class="modal-close" onclick="closeWarrantyModal()" aria-label="Close">&times;</button>
+            <p class="section-subtitle" style="margin-bottom: 8px;">Geneva Horological Registry</p>
+            <h2 style="font-size: 30px; margin-bottom: 10px;">Certificate & Provenance Verification</h2>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 22px; line-height: 1.6;">
+                Enter the 10-character serial number engraved on your caseback to verify Swiss authenticity, blockchain ownership ledger, and official atelier service records.
+            </p>
+
+            <form onsubmit="verifySerialNumber(event)" class="warranty-search-row">
+                <input type="text" id="serial-input" placeholder="e.g. AUR-8821-01" required>
+                <button type="submit" class="btn btn-gold">Verify</button>
+            </form>
+
+            <div class="sample-serials">
+                <span>Try sample serials:</span>
+                <button type="button" onclick="fillAndVerify('AUR-8821-01')">AUR-8821-01</button>
+                <button type="button" onclick="fillAndVerify('AUR-9040-07')">AUR-9040-07</button>
+                <button type="button" onclick="fillAndVerify('AUR-4102-19')">AUR-4102-19</button>
+            </div>
+
+            <!-- Dynamic Certificate Output Container -->
+            <div id="warranty-result-container"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <a href="#" class="logo" style="margin-bottom: 20px;">AURELIA<span>.</span></a>
+                <p>Purveyors of fine Swiss horology since 1894. Blending traditional craftsmanship with visionary design.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Collections</h4>
+                <ul>
+                    <li><a href="#">Royal Grand</a></li>
+                    <li><a href="#">Noir Skeleton</a></li>
+                    <li><a href="#">Imperial Heritage</a></li>
+                    <li><a href="#">Limited Complications</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Client Care</h4>
+                <ul>
+                    <li><a href="#">Book a Consultation</a></li>
+                    <li><a href="javascript:void(0)" onclick="openWarrantyModal()">Authentication</a></li>
+                    <li><a href="#">Global Warranty</a></li>
+                    <li><a href="#">Service & Repairs</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Newsletter</h4>
+                <p>Receive exclusive invitations to private viewings and new releases.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to Aurelia Private Gazette.');">
+                    <input type="email" placeholder="Your Email Address" required>
+                    <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AURELIA Horlogerie. All Rights Reserved.</p>
+            <p>Geneva &bull; Paris &bull; New York &bull; Tokyo</p>
+        </div>
+    </footer>
+    <script>
+        window.AURELIA_API_BASE = 'https://aurelia-horlogerie-backend.onrender.com/api';
+    </script>
+    <script src="script.js"></script>
+    <!-- External JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
